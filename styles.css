@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 80vh; /* Set the chat container height to full viewport height */
+}
+
+
+.chat-box {
+    flex: 1; /* Let the chat box expand to fill the remaining space */
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    background-image: url('chatbg.jpg'); /* Set the background image URL */
+    background-size: cover; /* Scale the image to cover the chat box */
+    background-position: center; /* Center the image */
+}
+
+.input-area {
+    display: flex;
+    margin-top: 10px;
+}
+
+#user-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+}
+
+#send-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.user-message {
+    background-color: #DCF8C6;
+    color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    max-width: 70%;
+	float: right;
+	clear: both; /* Clear previous floats */
+   
+}
+
+.assistant-message {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    max-width: 70%;
+	float: left;
+	clear: both; /* Clear previous floats */
+}
+
+.timestamp {
+    font-size: 12px;
+    color: #999;
+    text-align: right;
+}
