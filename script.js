@@ -59,13 +59,13 @@ $(document).ready(function() {
         const bearerToken = '[YOUR-API-TOKEN]'; // Replace with your actual bearer token
 
         const payload = {
-            // character_id: 'upR8b0Sfq3TZuUSS0d80', // Replace with your actual character ID if you use an existing Char of ChatFAI
-			name: 'TEST', // Replace with AI name
-			bio: 'I am a Test biogrpahy'// Replace with AI biography
+         // character_id: 'upR8b0Sfq3TZuUSS0d80', 		// Replace with your actual character ID if you use an existing Char of ChatFAI OR
+			name: 'TEST', 									// Replace with AI name AND
+			bio: 'I am a Test biogrpahy',					// Replace with AI biography
 			
             conversation: [
                 {
-                    sender: 'YourName', // Replace with your name or your alias
+                    sender: 'user', // do not change this!
                     content: message
                 }
             ]
@@ -79,10 +79,11 @@ $(document).ready(function() {
                 'Content-Type': 'application/json'
             },
             data: JSON.stringify(payload),
+			timeout: 50000, // Timeout in Millisekunden (hier: 5 Sekunden)
             success: function(response) {
                 const assistantResponse = response.content;
                 const assistantMessage = {
-                    sender: 'TEST', // Replace with AI name - this ist the DisplayName in the chat.
+                    sender: 'assistant', // do not change this!
                     content: assistantResponse
                 };
                 payload.conversation.push(assistantMessage);
