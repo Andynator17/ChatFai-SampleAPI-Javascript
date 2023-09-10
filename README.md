@@ -15,5 +15,5 @@ To use this sample script you need following things:
 => You need an Webspace oder Webserver where you can host the script.
 
 => You need to add/change your API Token, Name, Character Name and Character Biography in the javascript.
-
+!!! WARNING !!! - This script is not secure and is only to use for development and testing.
  
