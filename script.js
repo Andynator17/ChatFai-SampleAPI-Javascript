@@ -1,13 +1,10 @@
-// This code is a sample code for an easy API Chat with ChatFAI. andreas.pohl22@gmail.com
-
-
 $(document).ready(function() {
     const chatBox = $('#chat-box');
     const userInput = $('#user-input');
     const sendButton = $('#send-button');
-	
-	
-	sendButton.click(function() {
+    let conversation = []; // Array to save the full conversation
+
+    sendButton.click(function() {
         sendMessage();
     });
 
@@ -21,54 +18,46 @@ $(document).ready(function() {
     function sendMessage() {
         const userMessage = userInput.val().trim();
         if (userMessage !== '') {
+            conversation.push({ sender: 'user', content: userMessage }); // Adds the Usermessage to the conversation
             displayUserMessage(userMessage);
-            sendUserMessage(userMessage);
+            sendUserMessage(conversation); // Sends full conversation to the API
             userInput.val('');
         }
     }
 
-	
-
-     function displayUserMessage(message) {
-		 const timestamp = getCurrentTimestamp();
+    function displayUserMessage(message) {
+        const timestamp = getCurrentTimestamp();
         chatBox.append(`<div class="user-message">
                              <div class="message-container">${message}</div>
-							<div class="timestamp">${timestamp}</div>
+                            <div class="timestamp">${timestamp}</div>
                         </div>`);
         chatBox.scrollTop(chatBox[0].scrollHeight);
     }
 
-   function displayAssistantMessage(message) {
-	   const timestamp = getCurrentTimestamp();
+    function displayAssistantMessage(message) {
+        const timestamp = getCurrentTimestamp();
         chatBox.append(`<div class="assistant-message">
-							<div class="message-container">${message}</div>
-							<div class="timestamp">${timestamp}</div>
-						</div>`);
+                            <div class="message-container">${message}</div>
+                            <div class="timestamp">${timestamp}</div>
+                        </div>`);
         chatBox.scrollTop(chatBox[0].scrollHeight);
     }
-	
-	 function getCurrentTimestamp() {
+
+    function getCurrentTimestamp() {
         const now = new Date();
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     }
 
-    function sendUserMessage(message) {
+    function sendUserMessage(conversation) {
         const apiUrl = 'https://api.chatfai.com/v1/chat';
         const bearerToken = '[YOUR-API-TOKEN]'; // Replace with your actual bearer token
 
         const payload = {
-         // character_id: 'upR8b0Sfq3TZuUSS0d80', 		// Replace with your actual character ID if you use an existing Char of ChatFAI OR
-			name: 'TEST', 									// Replace with AI name AND
-			bio: 'I am a Test biogrpahy',					// Replace with AI biography
-			
-            conversation: [
-                {
-                    sender: 'user', // do not change this!
-                    content: message
-                }
-            ]
+            name: 'TEST',
+            bio: 'I am a Test biography',
+            conversation: conversation // Sends full conversation to the API
         };
 
         $.ajax({
@@ -79,19 +68,23 @@ $(document).ready(function() {
                 'Content-Type': 'application/json'
             },
             data: JSON.stringify(payload),
-			timeout: 50000, // Timeout in Millisekunden (hier: 5 Sekunden)
+            timeout: 50000,
             success: function(response) {
                 const assistantResponse = response.content;
-                const assistantMessage = {
-                    sender: 'assistant', // do not change this!
-                    content: assistantResponse
-                };
-                payload.conversation.push(assistantMessage);
+                conversation.push({ sender: 'assistant', content: assistantResponse }); // Adds the answere to the conversation JSON
                 displayAssistantMessage(assistantResponse);
+                // Saves the conversation to the JSON
+                saveConversationAsJson(conversation);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 displayAssistantMessage('Error making API call: ' + textStatus);
             }
         });
+    }
+
+    // Function to save the conversation to JSON
+    function saveConversationAsJson(conversation) {
+        const conversationJson = JSON.stringify(conversation, null, 2); 
+        console.log('Gespeicherte Konversation als JSON:', conversationJson);
     }
 });
