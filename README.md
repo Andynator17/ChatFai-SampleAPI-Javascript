@@ -2,7 +2,8 @@
 ChatFAI - Sample Chat with API integration in Javascript
 
 ChatFAI is an AI powered experience that allows you to chat with your favorite characters from movies, TV shows, books, history, and more.
-https://chatfai.com/
+
+=> https://chatfai.com/?ref=ZZwRrEVgkZWUAn9SZsaIC3xLaE52
 
 To use this sample script you need following things:
 
